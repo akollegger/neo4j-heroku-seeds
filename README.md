@@ -1,4 +1,4 @@
-neo4j-heroku-seeds
+Neo4j Heroku Seeds
 ==================
 
-Seed projects for growing your graph application.
+A bag of tiny application seeds, just enough to create a graph and display a web page.
