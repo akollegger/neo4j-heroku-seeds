@@ -9,10 +9,12 @@ This is an example application for our [Neo4j Add-On](https://addons.heroku.com/
    * (Download Neo4j)[http://neo4j.org/download]
    * Follow Neo4j's README to start the database
    * Make sure it is running by browsing Neo4j's (Web Interface)[http://localhost:7474]
-2. Run the seed app locally
+2. Get the seed app 
    * `git clone https://github.com/akollegger/neo4j-heroku-seeds.git`
    * `cd neo4j-heroku-seeds/ruby/sinatra-neography`
+3. Prepare the app
    * `bundle install`
+4. Run it locally
 
 ## Deploying to Heroku
 
