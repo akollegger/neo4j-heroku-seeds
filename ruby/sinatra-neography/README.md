@@ -15,7 +15,7 @@ to grow into graph-powered glory.
    * [Download Neo4j](http://neo4j.org/download)
    * Follow Neo4j's README to start the database
    * Make sure it is running by browsing Neo4j's Web Interface at [http://localhost:7474](http://localhost:7474)
-2. Get the seed app 
+2. Get this seed app 
    * `git clone https://github.com/akollegger/neo4j-heroku-seeds.git`
    * `cd neo4j-heroku-seeds/ruby/sinatra-neography`
 3. Prepare the app
@@ -26,7 +26,7 @@ to grow into graph-powered glory.
 
 ## Deploying to Heroku
 
-1. Get Heroku
+1. Got Heroku? Get it
    * create an account on [Heroku](http://heroku.com)
    * get the [Heroku Toolbelt](https://toolbelt.heroku.com)
    * prepare the CLI with `heroku login`
