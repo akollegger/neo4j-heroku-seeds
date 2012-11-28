@@ -19,5 +19,20 @@ This is an example application for our [Neo4j Add-On](https://addons.heroku.com/
 1. Get Heroku
    * create an account on (Heroku)[http://heroku.com]
    * get the (Heroku Toolbelt)[https://toolbelt.heroku.com]
+   * prepare the CLI with `heroku login`
+   * make sure your public SSH keys are [available to Heroku](https://devcenter.heroku.com/articles/keys)
 2. Heroku'ify the seed application
-   * `git init`
+   * use the `detachme.sh` script to make the subdir into a separate repository: `sh detachme.sh`
+   * create the heroku app: `heroku create`
+3. Deploy to Heroku
+   * `git push heroku master`
+4. Make sure that it launched successfully
+   * `heroku ps`
+   * Any problems? Check `heroku logs`
+   * "Sad face. Neo4j does not appear to be running..." indicates we need to provision the Neo4j Add-on
+5. Provision Neo4j Add-on
+   * `heroku addons:add neo4j`
+   * Give the database a minute to start up
+   * `heroku ps:restart`
+6. Browse your application
+   * `heroku open`

@@ -9,12 +9,16 @@ neo = Neography::Rest.new(neo4j_uri.to_s) # Neography expects a string
 
 def check_for_neo4j(neo4j_uri)
   begin
-    response = Net::HTTP.get_response(neo4j_uri)
+    http = Net::HTTP.new(neo4j_uri.host, neo4j_uri.port)
+    request = Net::HTTP::Get.new(neo4j_uri.request_uri)
+    request.basic_auth(neo4j_uri.user, neo4j_uri.password) if (neo4j_uri.user)
+    response = http.request(request)
+
     if (response.code != "200")
       abort "Sad face. Neo4j does not appear to be running. #{neo4j_uri} responded with code: #{response.code}"
     end
   rescue
-    abort "Sad face. Neo4j does not appear to be running at #{neo4j_uri}" 
+    abort "Sad face. Neo4j does not appear to be running at #{neo4j_uri} (" + $!.to_s + ")" 
   end
   puts "Awesome! Neo4j is available at #{neo4j_uri}"
 end
