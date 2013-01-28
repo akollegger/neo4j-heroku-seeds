@@ -1,5 +1,5 @@
 #/bin/sh
-git rm --cached .
+git rm -r --cached .
 git commit -am "detached ${PWD}"
 git init .
 git add .
