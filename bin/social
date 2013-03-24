@@ -1,0 +1,56 @@
+#!/bin/sh
+
+if [ -e "./social.conf" ]; then source "./social.conf"; fi
+
+SOCIAL_HOST=${SOCIAL_HOST:="localhost:5000"}
+SOCIAL_URL="http://${SOCIAL_HOST}"
+
+CURL_OPTS="--silent --fail -H Accept:application/json -H Content-Type:application/json"
+
+
+usage() {
+  echo "Usage: social <command> <params>"
+}
+
+createUser() {
+  curl ${CURL_OPTS} --data "{ \"uid\": \"${1}\", \"name\": \"${2}\" }" "${SOCIAL_URL}/users/"
+  if [ ! $? ]; then echo "Failed"; exit 1; fi
+}
+
+listUsers() {
+  curl ${CURL_OPTS} "${SOCIAL_URL}/users/"
+  if [ ! $? ]; then echo "Failed"; exit 1; fi
+}
+
+makeFriends() {
+  curl ${CURL_OPTS} --data "{ \"to\": \"${2}\" }" "${SOCIAL_URL}/users/${1}/friends/"
+  if [ ! $? ]; then echo "Failed"; exit 1; fi
+}
+
+
+listFriends() {
+  curl ${CURL_OPTS} "${SOCIAL_URL}/users/${1}/friends/"
+  if [ ! $? ]; then echo "Failed"; exit 1; fi
+}
+
+SOCIAL_CMD=${1}
+shift
+
+case ${SOCIAL_CMD} in
+  new) createUser "$@"
+      ;;
+  users) listUsers
+      ;;
+  befriend) makeFriends "$@"
+      ;;
+  friends) listFriends "$@"
+      ;;
+  help) usage
+      exit
+      ;;
+  *) usage
+      exit
+      ;;
+esac
+
+

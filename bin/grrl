@@ -1,0 +1,37 @@
+#!/bin/sh
+
+GRRL_HISTORY="${HOME}/.grrl_history"
+history -r ${GRRL_HISTORY}
+
+CYPHER_URL=http://localhost:5000/cypher
+#CYPHER_URL=http://localhost:7474/db/data/cypher
+
+ACCEPT_TYPE="application/json"
+CURL_OPTS="--fail --silent --header Content-Type:application/json"
+
+GRRL_PROMPT='--> '
+
+grrl() {
+  cql="$1"
+ curl ${CURL_OPTS} --data "{ \"query\": \"${cql}\", \"params\": {} }" ${CYPHER_URL} 
+  if [ ! $? ]; then echo "Failed"; exit 1; fi
+}
+
+if [ "$1" != "" ]; then
+  CURL_OPTS="${CURL_OPTS} --header Accept:text/plain"
+  grrl "$1"
+elif [[ -t 0 ]]; then
+  CURL_OPTS="${CURL_OPTS} --header Accept:text/plain"
+  while read -e -p "$GRRL_PROMPT" line; do
+    history -s "$line"
+    grrl "$line"
+  done
+  history -w ${GRRL_HISTORY}
+  exit 0
+else
+  CURL_OPTS="${CURL_OPTS} --header Accept:application/json"
+  while read line; do
+    grrl "$line"
+  done
+  exit 0
+fi
